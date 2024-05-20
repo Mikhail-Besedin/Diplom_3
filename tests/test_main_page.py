@@ -2,6 +2,7 @@ import allure
 from pages.main_page import MainPage, HeaderPage
 from pages.order_page import OrderPage
 from pages.personal_area_page import PersonalAreaPage
+from pages.restore_password_page import RestorePasswordPage
 
 
 class TestMainPage:
@@ -12,7 +13,9 @@ class TestMainPage:
                            2)Проверяем отображение элемента "Восстановить пароль" для подтверждения перехода  ''')
     def test_click_header_personal_area_button(self, driver):
         header_page = HeaderPage(driver)
-        assert header_page.click_header_personal_area_button().is_displayed()
+        restore_password_page= RestorePasswordPage(driver)
+        header_page.click_header_personal_area_button()
+        assert restore_password_page.expect_visibility_password_recovery().is_displayed()
 
 
 
@@ -32,8 +35,9 @@ class TestMainPage:
                            2)Проверяем наличие текста "Лента Заказов" в описании заголовка  ''')
     def test_click_header_order_feed_button(self, driver):
         header_page = HeaderPage(driver)
-        assert header_page.click_header_order_feed_button() == "Лента заказов"
-
+        order_page = OrderPage(driver)
+        header_page.click_header_order_feed_button()
+        assert order_page.get_text_order_feed_title() == "Лента заказов"
 
 
 
@@ -46,8 +50,6 @@ class TestMainPage:
 
 
 
-
-
     @allure.title('Тест проверки закрытия всплывающего окна с деталями кликом по крестику ')
     @allure.description('''1)кликаем на ингредиент 
                            2)кликаем по крестику 
@@ -55,8 +57,6 @@ class TestMainPage:
     def test_pop_up_window_close(self, driver):
         main_page = MainPage(driver)
         assert main_page.click_button_close_and_get_bool() == False
-
-
 
 
 
@@ -85,8 +85,10 @@ class TestMainPage:
         user = PersonalAreaPage(driver)
         main_page = MainPage(driver)
         order_page = OrderPage(driver)
+        header_page = HeaderPage(driver)
+        header_page.click_header_personal_area_button()
         user.login_user(register_new_user_and_return_login_password)
         main_page.add_bun()
         main_page.create_order_with_authorization()
         order_page.page_set_order()
-        assert order_page.page_set_order()== "идентификатор заказа"
+        assert order_page.page_set_order() == "идентификатор заказа"

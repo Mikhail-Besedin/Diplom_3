@@ -1,5 +1,6 @@
 import allure
 
+from pages.main_page import HeaderPage
 from pages.personal_area_page import PersonalAreaPage
 
 
@@ -9,10 +10,14 @@ class TestPersonalAreaPage:
     @allure.description('''1)Создаем пользователя и авторизуемся
                             2)кликаем на кнопку «Личный кабинет» в хедере 
                             3)Проверяем отображение элемента "Выход" для подтверждения перехода  ''')
-    def test_click_header_personal_area_button_with_authorization(self,driver,register_new_user_and_return_login_password):
+    def test_click_header_personal_area_button_with_authorization(self,driver,
+                                                                  register_new_user_and_return_login_password):
         user = PersonalAreaPage(driver)
+        header_page = HeaderPage(driver)
+        header_page.click_header_personal_area_button()
         user.login_user(register_new_user_and_return_login_password)
-        assert user.click_header_personal_area_button_with_authorization().is_displayed()
+        header_page.click_header_personal_area_button()
+        assert user.expect_visibility_exit().is_displayed()
 
 
 
@@ -23,8 +28,10 @@ class TestPersonalAreaPage:
                             2)Проверяем отображение элемента формы истории заказов для подтверждения перехода  ''')
     def test_click_order_history_button_with_authorization(self,driver,register_new_user_and_return_login_password):
         user = PersonalAreaPage(driver)
+        header_page = HeaderPage(driver)
+        header_page.click_header_personal_area_button()
         user.login_user(register_new_user_and_return_login_password)
-        user.click_header_personal_area_button_with_authorization()
+        header_page.click_header_personal_area_button()
         assert user.click_order_history_button_with_authorization().is_displayed()
 
 
@@ -36,8 +43,10 @@ class TestPersonalAreaPage:
                                 2)Проверяем отображение кнопки Войти для подтверждения выхода  ''')
     def test_exit_button_with_authorization(self, driver,register_new_user_and_return_login_password):
         user = PersonalAreaPage(driver)
+        header_page = HeaderPage(driver)
+        header_page.click_header_personal_area_button()
         user.login_user(register_new_user_and_return_login_password)
-        user.click_header_personal_area_button_with_authorization()
+        header_page.click_header_personal_area_button()
         assert user.click_exit_button_with_authorization().is_displayed()
 
 

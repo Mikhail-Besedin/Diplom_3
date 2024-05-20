@@ -26,5 +26,8 @@ class RestorePasswordPage(BasePage):
         self.click_to_element(RestorePasswordLocators.SHOW_PASSWORD)
         return self.find_element_with_wait(RestorePasswordLocators.ACTIVE_INPUT_PASSWORD)
 
-
-
+    @allure.step(
+        '  ожидаем, чтобы элемент "Восстановление пароля" стал видимым ')
+    def expect_visibility_password_recovery(self):
+        button_restore_password = self.find_element_with_wait(RestorePasswordLocators.RESTORE_PASSWORD_BUTTON)
+        return button_restore_password

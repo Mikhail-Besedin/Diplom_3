@@ -1,6 +1,6 @@
 import allure
 
-from locators.locators import MainPageLocators, OrderPageLocators, RestorePasswordLocators
+from locators.locators import MainPageLocators
 from pages.base_page import BasePage
 
 
@@ -8,18 +8,17 @@ from pages.base_page import BasePage
 
 class HeaderPage(BasePage):
 
-    @allure.step(' Кликаем на кнопку "Личный кабинет" в хедере и ожидаем чтобы элемент "Восстановление пароля" стал видимым ')
+    @allure.step(' Кликаем на кнопку "Личный кабинет" в хедере  ')
     def click_header_personal_area_button(self):
         self.click_to_element((MainPageLocators.LOG_IN_TO_YOUR_PERSONAL_ACCOUNT))
-        button_restore_password = self.find_element_with_wait(RestorePasswordLocators.RESTORE_PASSWORD_BUTTON)
-        return button_restore_password
 
 
 
-    @allure.step(' Кликаем на кнопку "Лента заказов" в хедере и получаем текст заголовка "Лента Заказов" ')
+
+    @allure.step(' Кликаем на кнопку "Лента заказов" в хедере  ')
     def click_header_order_feed_button(self):
         self.click_to_element((MainPageLocators.BUTTON_ORDER_FEED))
-        return self.get_text_from_element(OrderPageLocators.TITLE_IN_THE_ORDER_FEED )
+
 
 
 

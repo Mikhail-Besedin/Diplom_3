@@ -37,7 +37,8 @@ class TestRestorePasswordPage:
                            3)вводим почту и кликаем по кнопке «Восстановить»
                            4)Проверяем кликом по кнопке показать/скрыть пароль активность поля с паролем''')
 
-    def test_click_swow_password_input_active_input_pass(self, driver, register_new_user_and_return_login_password):
+    def test_click_swow_password_input_active_input_pass(self, driver,
+                                                         register_new_user_and_return_login_password):
         restore_password = RestorePasswordPage(driver)
         header_page = HeaderPage(driver)
         header_page.click_header_personal_area_button()
