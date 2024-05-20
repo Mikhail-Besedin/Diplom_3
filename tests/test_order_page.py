@@ -1,7 +1,9 @@
 
 
 import allure
-from pages.main_page import HeaderPage, MainPage
+
+from helpers import create_order
+from pages.main_page import HeaderPage
 from pages.order_page import OrderPage
 from pages.personal_area_page import PersonalAreaPage
 
@@ -31,10 +33,9 @@ class TestOrderPage:
     def test_get_quantity_orders_counter_total(self, driver, authorization_user):
         header_page = HeaderPage(driver)
         order_page = OrderPage(driver)
-        main = MainPage(driver)
         header_page.click_header_order_feed_button()
         before = int(order_page.get_quantity_orders_counter_total())
-        main.create_order(authorization_user)
+        create_order(authorization_user)
         after = int(order_page.get_quantity_orders_counter_total())
         assert after > before
 
@@ -50,10 +51,9 @@ class TestOrderPage:
     def test_get_quantity_orders_counter_today(self, driver, authorization_user):
         header_page = HeaderPage(driver)
         order_page = OrderPage(driver)
-        main = MainPage(driver)
         header_page.click_header_order_feed_button()
         before = int(order_page.get_quantity_orders_counter_today())
-        main.create_order(authorization_user)
+        create_order(authorization_user)
         after = int(order_page.get_quantity_orders_counter_today())
         assert after > before
 
@@ -66,8 +66,7 @@ class TestOrderPage:
     def test_order_in_process(self, driver, authorization_user):
         header_page = HeaderPage(driver)
         order_page = OrderPage(driver)
-        main = MainPage(driver)
-        order_number = main.create_order(authorization_user)
+        order_number = create_order(authorization_user)
         header_page.click_header_order_feed_button()
         assert order_number in order_page.get_quantity_orders_counter_in_process()
 
@@ -81,10 +80,9 @@ class TestOrderPage:
     def test_users_history_in_orders_feed(self, driver,register_new_user_and_return_login_password, authorization_user):
         header_page = HeaderPage(driver)
         order_page = OrderPage(driver)
-        main = MainPage(driver)
         user = PersonalAreaPage(driver)
         user.login_user(register_new_user_and_return_login_password)
-        main.create_order(authorization_user)
+        create_order(authorization_user)
         user.click_header_personal_area_button_with_authorization()
         user.click_order_history_button_with_authorization()
         order_in_history = user.get_number_order_in_history()

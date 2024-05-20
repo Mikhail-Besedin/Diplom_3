@@ -1,11 +1,11 @@
 import allure
-import requests
+
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
-from data import Urls
+
 
 
 class BasePage:
@@ -56,11 +56,5 @@ class BasePage:
 
 
 
-    @allure.step('Создание заказа с ингредиентами при авторизованном пользователе ')
-    def create_order(self,authorization_user):
-        list_ingedients = requests.get(Urls.GET_INGREDIENTS)
-        payload_ingedients = {"ingredients": [list_ingedients.json()["data"][0]["_id"]]}
-        response_order = requests.post(Urls.ACTIONS_WITH_ORDERS, data=payload_ingedients,
-                                 headers={'authorization': authorization_user.json()["accessToken"]})
-        return str(response_order.json()["order"]["number"])
+
 
