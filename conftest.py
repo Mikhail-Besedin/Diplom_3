@@ -38,8 +38,8 @@ def register_new_user_and_return_login_password():
         "name": name}
     response = requests.post(Urls.CREATE_USER, data=payload)
     yield login_pass
-    response_delete = requests.delete(Urls.ACTIONS_WITH_USER, headers={'authorization': response.json()["accessToken"]})
-    return response_delete
+    requests.delete(Urls.ACTIONS_WITH_USER, headers={'authorization': response.json()["accessToken"]})
+
 
 
 
